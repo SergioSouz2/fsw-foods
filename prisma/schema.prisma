@@ -37,6 +37,7 @@ model Product {
   imageUrl     String
   description  String
   price        Decimal    @db.Decimal(10, 2)
+  discountPercentage Int   
   restaurantId String
   categoryId   String
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
