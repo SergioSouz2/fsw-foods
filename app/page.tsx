@@ -1,6 +1,8 @@
+import Header from "./_components/header"
+
 const Home = () => {
    return (
-      <div className=" p-5 bg-red-500 mt-5"></div>
+      <Header/>
    )
 }
 
