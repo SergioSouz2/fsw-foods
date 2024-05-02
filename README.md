@@ -1,6 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Getting Started
 
 First, run the development server:
 
@@ -36,4 +35,8 @@ yarn database:db
 Em seguinda podemos rodar nossas migrates init
 ```
 npx prisma migrate dev --name init_database 
+```
+Em seguinda podemos rodar nossas seed para alimentar nosso banco
+```
+npx prisma db seed   
 ```
