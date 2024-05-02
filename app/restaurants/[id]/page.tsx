@@ -2,8 +2,8 @@ import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
 
 import ProductList from "@/app/_components/product-list";
-import RestaurantsImage from "../_components/restaurant-image";
-import RestaurantDetails from "../_components/restaurant-details";
+import RestaurantsImage from "./_components/restaurant-image";
+import RestaurantDetails from "./_components/restaurant-details";
 
 interface RestaurantsPageProps {
    params: {
