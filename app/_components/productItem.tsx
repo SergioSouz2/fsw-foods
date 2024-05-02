@@ -1,7 +1,12 @@
-import { Prisma } from "@prisma/client";
+"use client";
+
+import Link from "next/link";
 import Image from "next/image";
-import { computerProductTotalPrice, formatCurrency } from "../_helpers/price";
+
+import { Prisma } from "@prisma/client";
 import { ArrowDownIcon } from "lucide-react";
+
+import { computerProductTotalPrice, formatCurrency } from "../_helpers/price";
 
 
 interface ProductItemProps {
@@ -18,8 +23,12 @@ interface ProductItemProps {
 
 
 const ProductItem = ({product}:ProductItemProps) => {
+
    return (
-      <div className="space-y-8 w-[150px] min-w-[150px]">
+      <Link className="w-[150px] min-w-[150px]" href={`/products/${product.id}`}>
+         <div 
+            className="space-y-8 w-[150px] min-w-[150px]" 
+         >
          <div className=" h-[150px] w-full relative">
             <Image 
                src={product.imageUrl} 
@@ -56,6 +65,8 @@ const ProductItem = ({product}:ProductItemProps) => {
             <span className=" block text-muted-foreground text-xs">{product.restaurant.name}</span>
          </div>
       </div>
+   </Link>
+
    );
 }
 
