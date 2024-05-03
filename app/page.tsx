@@ -7,6 +7,7 @@ import { ChevronRightIcon } from "lucide-react"
 import { db } from "./_lib/prisma"
 import PromoBanne from "./_components/promoBanne"
 import RestaurantList from "./_components/restaurant-list"
+import Link from "next/link"
 
 
 
@@ -74,10 +75,12 @@ const Home = async () => {
          <div className="py-6 space-y-4">
             <div className="px-5 flex justify-between items-center" >
                <h2 className="font-semibold">Restaurantes Recomendados</h2>
-               <Button variant={"ghost"} className="h-fit text-primary p-0 hover:bg-transparent hover:text-primary">
-                  Ver todos
-                  <ChevronRightIcon size={16}/>
-               </Button>
+               <Link href={'/restaurants/recommended'}>
+                  <Button variant={"ghost"} className="h-fit text-primary p-0 hover:bg-transparent hover:text-primary">
+                     Ver todos
+                     <ChevronRightIcon size={16}/>
+                  </Button>
+               </Link>
             </div>
 
             <RestaurantList/>
