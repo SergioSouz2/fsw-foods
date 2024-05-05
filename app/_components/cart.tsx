@@ -10,7 +10,8 @@ import { Separator } from "./ui/separator"
 
 const Cart = () => {
    const {products, subtotalPrice , totalDiscounts, totalPrice} = useContext(CartContext)
-
+   console.log( totalDiscounts);
+   
    return (
       <div className="py-5  flex flex-col h-full">
         
@@ -46,12 +47,12 @@ const Cart = () => {
 
                            <div className="flex justify-between text-xs">
                               <span className="text-muted-foreground">Descontos</span>
-                              <span>- {formatCurrency(totalDiscounts)}</span>
+                              <span> - {formatCurrency(totalDiscounts)}</span>
                            </div>
                            <Separator/>
 
                            <div className="flex justify-between text-xs font-semibold">
-                              <span >Total</span>
+                              <span >Total + Entrega</span>
                               <span>{formatCurrency(totalPrice)}</span>
                            </div>
                         </CardContent>
