@@ -13,6 +13,7 @@ import DiscountBadge from "@/app/_components/discount-badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/app/_components/ui/sheet";
 import { computerProductTotalPrice, formatCurrency } from "@/app/_helpers/price";
 import { CartContext } from "@/app/_contexte/cart";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/app/_components/ui/alert-dialog";
 
 
 interface ProductDetailsProps{
@@ -32,15 +33,31 @@ const ProductDetails = ({product,complementaryProducts}:ProductDetailsProps) => 
 
    const [quantity, setQuantity] = useState(1)
    const [isCartOpen, setIsCartOpen] = useState(false)
-   const { addProductToCard, products} = useContext(CartContext)
-   console.log(products);
+   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
 
-   const handleAddToCardClick = () => {
-      addProductToCard(product,quantity )
+   const { addProductToCard, products} = useContext(CartContext)
+
+   const addToCart = ({emptyCart}: {emptyCart?:boolean} ) => {
+      addProductToCard({product,quantity, emptyCart})
       setIsCartOpen(true)
    }
 
-   
+   const handleAddToCardClick = () => {
+      // VERIFICAR SE HA ALGUM PRODUTO DE OUTRO RESTUARANTE NO CARRINHO
+      const hasDifferentRestaurantProduct = products.some(
+         (cartProduct) => cartProduct.restaurantId !== product.restaurantId
+      )
+      
+      // SE HOUVER, ABRIR UM AVISO
+      if(hasDifferentRestaurantProduct){
+         return setIsConfirmationDialogOpen(true)
+      }
+
+      addToCart({
+         emptyCart: false
+      })
+   }
+
    const handleIncreaseQuantityClick = () => 
       setQuantity((currentState) => currentState + 1);
 
@@ -132,8 +149,23 @@ const ProductDetails = ({product,complementaryProducts}:ProductDetailsProps) => 
                </SheetHeader>
                <Cart/>
             </SheetContent>
-
          </Sheet>
+
+         <AlertDialog open={ isConfirmationDialogOpen} onOpenChange={setIsConfirmationDialogOpen}>
+            <AlertDialogContent>
+               <AlertDialogHeader>
+                  <AlertDialogTitle>Você já tem itens adicionados na sua sacola</AlertDialogTitle>
+                  <AlertDialogDescription>
+                  Deseja limpar a sacola?
+                  </AlertDialogDescription>
+               </AlertDialogHeader>
+               <AlertDialogFooter>
+                  <AlertDialogCancel>Não</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => addToCart({emptyCart: true})}>Sim</AlertDialogAction>
+               </AlertDialogFooter>
+            </AlertDialogContent>
+         </AlertDialog>
+
       </>        
    
    );

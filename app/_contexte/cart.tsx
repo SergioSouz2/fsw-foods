@@ -24,15 +24,19 @@ interface ICartContext  {
    totalPrice: number,
    totalDiscounts: number,
    // eslint-disable-next-line no-unused-vars
-   addProductToCard: ( product: Prisma.ProductGetPayload<{
-      include:{
-         restaurant:{
-            select:{
-               deliveryFee:true
-            }
-         }
-      }
-   }>, quantity:number) => void;
+   addProductToCard: ({ product, quantity, emptyCart }: {
+      product: Prisma.ProductGetPayload<{
+         include: {
+            restaurant: {
+               select: {
+                  deliveryFee: true;
+               };
+            };
+         };
+      }>;
+      quantity: number;
+      emptyCart?: boolean;
+   }) => void
    decreaseProductQuantity: (productId: string) => void
    increaseProductQuantity: (productId: string) => void
    removeProductFromCart: (productId: string) => void
@@ -101,16 +105,25 @@ export const CartProvider = ({children}:{children: ReactNode}) => {
    }
 
    const addProductToCard= (
-      product: Prisma.ProductGetPayload<{
-         include:{
-            restaurant:{
-               select:{
-                  deliveryFee:true
+      {product, quantity, emptyCart} : {
+         product: Prisma.ProductGetPayload<{
+            include:{
+               restaurant:{
+                  select:{
+                     deliveryFee:true
+                  }
                }
             }
-         }
-      }>, 
-      quantity: number) => {
+         }>, 
+         quantity: number,
+         emptyCart?: boolean
+      }
+   
+   ) => {
+   
+      if(emptyCart){
+         setProducts([])
+      }
       // VERIFICAR SE O PRODUTO JA ESTA NO CARRINHO
       const isProductAlreadyOnCart = products.some(cartProduct => cartProduct.id === product.id)
 
